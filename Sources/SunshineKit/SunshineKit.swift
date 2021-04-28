@@ -2,17 +2,19 @@ import Foundation
 import Combine
 import CoreLocation
 
-protocol SunshineKitType: AnyObject {
+public protocol SunshineKitType: AnyObject {
     func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, Error>
 }
 
-final class SunshineKit: SunshineKitType {
+public final class SunshineKit: SunshineKitType {
     
     private let session: URLSession
     private static let APIKey: String = "58a4b14287eb47abb01141445212804"
     private let decoder = JSONDecoder()
     
-    init(session: URLSession = .shared) {
+    public static let shared: SunshineKitType = SunshineKit()
+    
+    private init(session: URLSession = .shared) {
         self.session = session
     }
     
@@ -31,7 +33,7 @@ final class SunshineKit: SunshineKitType {
         }
     }
     
-    func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, Error> {
+    public func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, Error> {
         session.dataTaskPublisher(for: Endpoint.weather(location).url)
             .receive(on: DispatchQueue(label: "background.queue"))
             .map(\.data)

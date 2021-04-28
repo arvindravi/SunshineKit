@@ -6,23 +6,23 @@
 import Foundation
 
 // MARK: - WeatherRawResponse
-struct WeatherRawResponse: Codable {
+public struct WeatherRawResponse: Codable {
     let data: DataClass
 }
 
 // MARK: - DataClass
-struct DataClass: Codable {
+public struct DataClass: Codable {
     let request: [Request]
     let weather: [Weather]
 }
 
 // MARK: - Request
-struct Request: Codable {
+public struct Request: Codable {
     let type, query: String
 }
 
 // MARK: - Weather
-struct Weather: Codable {
+public struct Weather: Codable {
     let date: String
     let astronomy: [Astronomy]
     let maxtempC, maxtempF, mintempC, mintempF: String
@@ -31,7 +31,7 @@ struct Weather: Codable {
 }
 
 // MARK: - Astronomy
-struct Astronomy: Codable {
+public struct Astronomy: Codable {
     let sunrise, sunset, moonrise, moonset: String
     let moonPhase, moonIllumination: String
 
@@ -43,7 +43,7 @@ struct Astronomy: Codable {
 }
 
 // MARK: - Hourly
-struct Hourly: Codable {
+public struct Hourly: Codable {
     let time, tempC, tempF, windspeedMiles: String
     let windspeedKmph, winddirDegree, winddir16Point, weatherCode: String
     let weatherIconURL, weatherDesc: [WeatherDescElement]
@@ -81,6 +81,6 @@ struct Hourly: Codable {
 }
 
 // MARK: - WeatherDescElement
-struct WeatherDescElement: Codable {
+public struct WeatherDescElement: Codable {
     let value: String
 }
