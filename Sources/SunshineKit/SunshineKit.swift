@@ -24,13 +24,13 @@ public final class SunshineKit: SunshineKitType {
         self.session = session
     }
     
-    public enum Endpoint {
+    enum Endpoint {
         static let baseURL = URL(string: "http://api.worldweatheronline.com/premium/v1/marine.ashx")!
 		static var baseURLComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
         
         case weather(CLLocation)
         
-        public var url: URL? {
+        var url: URL? {
             switch self {
             case .weather(let location):
                 let latitude = location.coordinate.latitude
@@ -49,6 +49,7 @@ public final class SunshineKit: SunshineKitType {
 		guard let url = Endpoint.weather(location).url else {
 			return Fail(error: Error.invalidURL).eraseToAnyPublisher()
 		}
+        print("Fetching Weather for \(url.absoluteString)")
         return session.dataTaskPublisher(for: url)
 			.map(\.data)
             .decode(type: WeatherRawResponse.self, decoder: decoder)
