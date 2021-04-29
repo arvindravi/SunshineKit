@@ -45,10 +45,11 @@ public final class SunshineKit: SunshineKitType {
         }
     }
     
-	public func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, SunshineKit.Error> {
+    public func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, SunshineKit.Error> {
 		guard let url = Endpoint.weather(location).url else {
 			return Fail(error: Error.invalidURL).eraseToAnyPublisher()
 		}
+        print("Fetching Weather for \(url.absoluteString)")
         return session.dataTaskPublisher(for: url)
 			.map(\.data)
             .decode(type: WeatherRawResponse.self, decoder: decoder)
