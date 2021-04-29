@@ -37,6 +37,9 @@ public final class SunshineKit: SunshineKitType {
         session.dataTaskPublisher(for: Endpoint.weather(location).url)
             .map(\.data)
             .decode(type: WeatherRawResponse.self, decoder: decoder)
+            .mapError { error in
+                print(error) as! Error
+            }
             .eraseToAnyPublisher()
     }
     
