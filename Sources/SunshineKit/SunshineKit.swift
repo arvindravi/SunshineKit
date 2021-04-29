@@ -35,7 +35,6 @@ public final class SunshineKit: SunshineKitType {
     
     public func weather(for location: CLLocation) -> AnyPublisher<WeatherRawResponse, Error> {
         session.dataTaskPublisher(for: Endpoint.weather(location).url)
-            .receive(on: DispatchQueue(label: "background.queue"))
             .map(\.data)
             .decode(type: WeatherRawResponse.self, decoder: decoder)
             .eraseToAnyPublisher()
